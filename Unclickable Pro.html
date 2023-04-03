@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Moving Button Example</title>
+    <style>
+      .moving-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="myButton" class="moving-button">Click me!</button>
+    <script>
+      var button = document.getElementById("myButton");
+
+      // Move the button randomly
+      function moveButton() {
+        var newX = Math.floor(Math.random() * (window.innerWidth - button.offsetWidth));
+        var newY = Math.floor(Math.random() * (window.innerHeight - button.offsetHeight));
+        button.style.left = newX + "px";
+        button.style.top = newY + "px";
+      }
+
+      // Check if the cursor is near the button
+      function checkDistance(event) {
+        var buttonRect = button.getBoundingClientRect();
+        var distance = Math.sqrt(
+          Math.pow(event.clientX - buttonRect.left - buttonRect.width / 2, 2) +
+          Math.pow(event.clientY - buttonRect.top - buttonRect.height / 2, 2)
+        );
+        if (distance < 100) {
+          moveButton();
+        }
+      }
+
+      // Add event listener to move the button when the cursor gets near it
+      document.addEventListener("mousemove", checkDistance);
+    </script>
+  </body>
+</html>
